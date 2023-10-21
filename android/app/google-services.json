@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "1051907646227",
+    "project_id": "nyeinchanmoe-b6993",
+    "storage_bucket": "nyeinchanmoe-b6993.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1051907646227:android:4550e3e61d340aecccb0e6",
+        "android_client_info": {
+          "package_name": "com.example.firebase_messaging_sample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1051907646227-ddq3uhcfsok511b8qpvvfipceg02hlqv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdE8c8V1wsJVpFUiA5KMMUxx_63-Covm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1051907646227-ddq3uhcfsok511b8qpvvfipceg02hlqv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1051907646227-0m1icjden2743t24jhtqhvsp96e0dhs4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.webiots.probotgpt"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1051907646227:android:6137570baf8c4414ccb0e6",
+        "android_client_info": {
+          "package_name": "com.example.new_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1051907646227-ddq3uhcfsok511b8qpvvfipceg02hlqv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdE8c8V1wsJVpFUiA5KMMUxx_63-Covm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1051907646227-ddq3uhcfsok511b8qpvvfipceg02hlqv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1051907646227-0m1icjden2743t24jhtqhvsp96e0dhs4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.webiots.probotgpt"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1051907646227:android:aff9d3c3007c7e55ccb0e6",
+        "android_client_info": {
+          "package_name": "com.innwa.happycooky"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1051907646227-ddq3uhcfsok511b8qpvvfipceg02hlqv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdE8c8V1wsJVpFUiA5KMMUxx_63-Covm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1051907646227-ddq3uhcfsok511b8qpvvfipceg02hlqv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1051907646227-0m1icjden2743t24jhtqhvsp96e0dhs4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.webiots.probotgpt"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
