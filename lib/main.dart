@@ -1,13 +1,20 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project/config/app_theme.dart';
 import 'package:new_project/config/routes.dart';
+import 'package:new_project/config/shared_pref.dart';
+import 'package:new_project/firebase_options.dart';
 
 final GlobalKey<NavigatorState> navigatorKey =
     GlobalKey(debugLabel: 'Main Navigator');
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await EasyLocalization.ensureInitialized();
+  await SharedPref.init();
 
   runApp(EasyLocalization(
     supportedLocales: const [Locale('en', 'US'), Locale('my', 'MM')],

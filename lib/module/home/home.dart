@@ -87,6 +87,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project/config/app_theme.dart';
+import 'package:new_project/config/routes.dart';
 import 'package:new_project/constant/font_size.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -175,7 +176,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),
                                   side: const BorderSide(color: Colors.black)),
-                              onPressed: () {},
+                              onPressed: () {
+                                context.toName(Routes.addTotalBalance);
+                              },
                               child: const Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -263,7 +266,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
           itemCount: 3),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          context.toName(Routes.addMenuItem);
+        },
         child: const Text('New'),
       ),
     );

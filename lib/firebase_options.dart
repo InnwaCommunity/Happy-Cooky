@@ -67,8 +67,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1051907646227',
     projectId: 'nyeinchanmoe-b6993',
     storageBucket: 'nyeinchanmoe-b6993.appspot.com',
-    androidClientId: '1051907646227-gmumulpqa1ishkiln23v5sf3og18k5d7.apps.googleusercontent.com',
-    iosClientId: '1051907646227-omh968bec9m30igm1qe77c5el6cfgvp4.apps.googleusercontent.com',
+    androidClientId:
+        '1051907646227-gmumulpqa1ishkiln23v5sf3og18k5d7.apps.googleusercontent.com',
+    iosClientId:
+        '1051907646227-omh968bec9m30igm1qe77c5el6cfgvp4.apps.googleusercontent.com',
     iosBundleId: 'com.example.newProject',
   );
 
@@ -78,8 +80,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1051907646227',
     projectId: 'nyeinchanmoe-b6993',
     storageBucket: 'nyeinchanmoe-b6993.appspot.com',
-    androidClientId: '1051907646227-gmumulpqa1ishkiln23v5sf3og18k5d7.apps.googleusercontent.com',
-    iosClientId: '1051907646227-n54h9bf1rpl6n9k515e04bceoidjtaul.apps.googleusercontent.com',
+    androidClientId:
+        '1051907646227-gmumulpqa1ishkiln23v5sf3og18k5d7.apps.googleusercontent.com',
+    iosClientId:
+        '1051907646227-n54h9bf1rpl6n9k515e04bceoidjtaul.apps.googleusercontent.com',
     iosBundleId: 'com.example.newProject.RunnerTests',
   );
 }
