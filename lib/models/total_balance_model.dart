@@ -1,4 +1,5 @@
 class TotalBalanceModel {
+  String totalbalanceid;
   String totalbalance;
   String totaldes;
   String insertdate;
@@ -7,7 +8,8 @@ class TotalBalanceModel {
   String sharestatus;
 
   TotalBalanceModel(
-      {required this.totalbalance,
+      {required this.totalbalanceid,
+      required this.totalbalance,
       required this.totaldes,
       required this.insertdate,
       required this.starttimerangedate,
@@ -16,6 +18,7 @@ class TotalBalanceModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'totalbalanceid': totalbalanceid,
       'totalbalance': totalbalance,
       'totaldes': totaldes,
       'insertdate': insertdate,
@@ -27,6 +30,7 @@ class TotalBalanceModel {
 
   factory TotalBalanceModel.fromMap(Map<String, dynamic> map) {
     return TotalBalanceModel(
+      totalbalanceid: map['totalbalanceid'],
       totalbalance: map['totalbalance'],
       totaldes: map['totaldes'],
       insertdate: map['insertdate'],

@@ -107,6 +107,12 @@ class _HomeScreenState extends State<HomeScreen> {
   ScrollController scrollController = ScrollController();
   TextEditingController itemNameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+  String total = '';
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(50),
                                   side: const BorderSide(color: Colors.black)),
                               onPressed: () {
-                                context.toName(Routes.addTotalBalance);
+                                context.toName(Routes.totalhistory);
                               },
                               child: const Column(
                                 mainAxisAlignment:

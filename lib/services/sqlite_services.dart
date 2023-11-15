@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:new_project/models/menu_item.dart';
 import 'package:new_project/models/total_balance_model.dart';
+import 'package:new_project/models/usage_item.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'dart:developer' as dev;
 
 class SqliteService {
   SqliteService._privateConstructor();
@@ -15,6 +17,7 @@ class SqliteService {
   static const String dbname = 'happycooky.db';
   static const String tbltotalrecords = 'TotalBalanceRecord';
   static const String tblmenuitemrecords = 'MenuItemRecord';
+  static const String tblusagerecords = 'tblusagerecords';
 
   static const String totalautoid = 'totalautoid';
   static const String totalbalance = 'totalbalance';
@@ -29,6 +32,10 @@ class SqliteService {
   static const String menuprice = "menuprice";
   static const String menudesc = "menudesc";
   static const String menuitemdate = "menuitemdate";
+
+  static const String usageautoid = "usageautoid";
+  static const String usageamount = "usageamount";
+  static const String remainingbalance = "remainingbalance";
 
   Future<Database> get db async {
     if (_db != null) {
@@ -69,7 +76,20 @@ class SqliteService {
             $sharestatus TEXT NOT NULL
           )
           ''');
-    } catch (error) {}
+
+      await db.execute('''
+          CREATE TABLE $tblusagerecords (
+            $usageautoid INTEGER PRIMARY KEY AUTOINCREMENT,
+            $totalbalance TEXT NOT NULL,
+            $usageamount TEXT NOT NULL,
+            $remainingbalance TEXT NOT NULL,
+            $insertdate TEXT NOT NULL,
+            $sharestatus TEXT NOT NULL
+          )
+          ''');
+    } catch (error) {
+      dev.log(error.toString());
+    }
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {}
@@ -92,5 +112,33 @@ class SqliteService {
     } catch (error) {
       return false;
     }
+  }
+
+  Future<bool> saveUsageBalance(UsageItem usageItem) async {
+    try {
+      Database db = await instance.db;
+      await db.insert(tblusagerecords, usageItem.toMap());
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  Future<List<TotalBalanceModel>> getTotalBalanceList() async {
+    Database db = await instance.db;
+
+    try {
+      final List<Map<String, dynamic>> maps = await db.query(tbltotalrecords);
+
+      if (maps.isNotEmpty) {
+        return List.generate(maps.length, (i) {
+          return TotalBalanceModel.fromMap(maps[i]);
+        });
+      }
+    } catch (error) {
+      return [];
+    }
+
+    return [];
   }
 }

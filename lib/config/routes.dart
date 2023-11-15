@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/module/home/add_menu_screen.dart';
+import 'package:new_project/models/total_balance_model.dart';
+import 'package:new_project/module/menu/add_menu_screen.dart';
 import 'package:new_project/module/total/add_total_screen.dart';
 import 'package:new_project/module/home/home.dart';
 import 'package:new_project/module/home/splash_screen.dart';
+import 'package:new_project/module/total/total_screen.dart';
 
 class Routes {
   static const splashPage = '/';
   static const home = 'home';
   static const addTotalBalance = 'addTotalBalance';
+  static const totalhistory = 'totalhistory';
   static const addMenuItem = 'addMenuItem';
 
   static Route<dynamic>? routeGenerator(RouteSettings settings) {
-    // final argument=settings.arguments;
+    final argument=settings.arguments;
     switch (settings.name) {
       case '/':
         return makeRoute(const SplashScreen(), settings);
@@ -20,10 +23,17 @@ class Routes {
         return makeRoute(const HomeScreen(), settings);
 
       case 'addTotalBalance':
-        return makeRoute(const AddTotalScreen(), settings);
+        return makeRoute(
+            AddTotalScreen(
+              argument as TotalBalanceModel?,
+            ),
+            settings);
 
       case 'addMenuItem':
         return makeRoute(const AddMenuScreen(), settings);
+
+      case 'totalhistory':
+        return makeRoute( const TotalScreen(), settings);
     }
     return null;
   }

@@ -42,11 +42,12 @@ dependencies:
   easy_localization: ^3.0.3
   fl_chart: ^0.64.0
   firebase_core: ^2.19.0
-  firebase_auth: ^4.11.1
   firebase_storage: ^11.3.1
-  firebase_database: ^10.3.2
   path_provider: ^2.1.1
   path: ^1.8.3
+  cloud_firestore: ^4.12.2
+  connectivity_plus: ^5.0.1
+  uuid: ^4.2.1
 
 dev_dependencies:
   flutter_test:

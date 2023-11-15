@@ -1,4 +1,5 @@
 class MenuItem {
+  String menuid;
   String menuname;
   String menuprice;
   String menudesc;
@@ -6,6 +7,7 @@ class MenuItem {
   String shareStatus;
 
   MenuItem({
+    required this.menuid,
     required this.menuname,
     required this.menuprice,
     required this.menudesc,
@@ -15,6 +17,7 @@ class MenuItem {
 
   Map<String, dynamic> toMap() {
     return {
+      'menuid': menuid,
       'menuname': menuname,
       'menuprice': menuprice,
       'menudesc': menudesc,
@@ -25,6 +28,7 @@ class MenuItem {
 
   factory MenuItem.fromMap(Map<String, dynamic> map) {
     return MenuItem(
+      menuid: map['menuid'],
       menuname: map['menuname'],
       menuprice: map['menuprice'],
       menudesc: map['menudesc'],

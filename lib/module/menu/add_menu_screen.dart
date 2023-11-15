@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:new_project/models/menu_item.dart';
 import 'package:new_project/services/firebase_service.dart';
 import 'package:new_project/services/sqlite_services.dart';
+import 'package:uuid/uuid.dart';
 
 class AddMenuScreen extends StatefulWidget {
   const AddMenuScreen({Key? key}) : super(key: key);
@@ -48,11 +49,12 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
   List<_DateItem> dateRange = [];
   List<List<_MenuItem>> menuItemsList = [[]];
   final db = SqliteService.instance;
+  var uuid = const Uuid();
 
   void addDay(DateTime dateTime) async {
     final formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
-    List<MenuItem> menuItemList =
-        await FirebaseService().fetchMenuItemsFromFirebase(formattedDate);
+    List<MenuItem> menuItemList = await FirebaseService()
+        .fetchMenuItemsFromFirebase(insertdate: formattedDate);
     if (menuItemsList.isEmpty) {
       setState(() {
         dateRange.add(_DateItem(
@@ -131,28 +133,12 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
             child: Center(
               child: GestureDetector(
                 onTap: () {
-                  for (int i = 0; i < dateRange.length; i++) {
-                    final currentDate = dateRange[i].time;
-                    final formattedDate =
-                        DateFormat('yyyy-MM-dd').format(currentDate);
-                    for (int j = 0; j < menuItemsList[i].length; j++) {
-                      final menuItem = menuItemsList[i][j];
-                      final menuName = menuItem.menuNameController.text;
-                      final menuPrice = menuItem.menuPriceController.text;
-                      final menuDesc = menuItem.menuDescController.text;
-                      MenuItem item = MenuItem(
-                          menuname: menuName,
-                          menuprice: menuPrice,
-                          menudesc: menuDesc,
-                          menuitemdate: formattedDate,
-                          shareStatus: "true");
-                      db.saveMenuItem(item);
-                      FirebaseService().saveMenuItemToFirebase(item);
-                    }
-                  }
+                  save();
                 },
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    save();
+                  },
                   style: ButtonStyle(
                     side: MaterialStateProperty.all(
                       BorderSide(
@@ -394,5 +380,28 @@ class _AddMenuScreenState extends State<AddMenuScreen> {
         ],
       ),
     );
+  }
+
+  void save() {
+    for (int i = 0; i < dateRange.length; i++) {
+      final currentDate = dateRange[i].time;
+      final formattedDate = DateFormat('yyyy-MM-dd').format(currentDate);
+      for (int j = 0; j < menuItemsList[i].length; j++) {
+        final menuItem = menuItemsList[i][j];
+        final menuName = menuItem.menuNameController.text;
+        final menuPrice = menuItem.menuPriceController.text;
+        final menuDesc = menuItem.menuDescController.text;
+        String menuid = uuid.v4();
+        MenuItem item = MenuItem(
+            menuid: menuid,
+            menuname: menuName,
+            menuprice: menuPrice,
+            menudesc: menuDesc,
+            menuitemdate: formattedDate,
+            shareStatus: "true");
+        db.saveMenuItem(item);
+        FirebaseService().saveMenuItemToFirebase(item);
+      }
+    }
   }
 }
