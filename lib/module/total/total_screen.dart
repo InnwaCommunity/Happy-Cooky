@@ -9,7 +9,6 @@ import 'package:new_project/models/total_balance_model.dart';
 import 'package:new_project/services/firebase_service.dart';
 import 'package:new_project/services/sqlite_services.dart';
 import 'dart:developer' as dev;
-
 import 'package:uuid/uuid.dart';
 
 class TotalScreen extends StatefulWidget {
@@ -28,6 +27,7 @@ class _TotalScreenState extends State<TotalScreen> {
   DateTime toDate = DateTime.now();
   final formatter = DateFormat('yyyy-MM-dd');
   var uuid = const Uuid();
+  double totalbal = 0;
 
   @override
   void initState() {
@@ -42,15 +42,26 @@ class _TotalScreenState extends State<TotalScreen> {
 
     NetworkInfo networkInfo = NetworkInfo(Connectivity());
     bool isConnected = await networkInfo.isConnected;
+    totalBalanceController.clear();
+    descriptionController.clear();
     if (isConnected) {
-      await FirebaseService().fetchTotalBalanceFromFirestore().then((value) {
+      totalbal = SharedPref.getTotalBalance();
+      FirebaseService().fetchTotalBalanceFromFirestore().then((value) {
         totalBalanceList = value;
         setState(() {});
       });
     } else {
+      totalbal = SharedPref.getTotalBalance();
       totalBalanceList = await db.getTotalBalanceList();
       setState(() {});
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    totalBalanceController.dispose();
+    descriptionController.dispose();
   }
 
   @override
@@ -74,7 +85,7 @@ class _TotalScreenState extends State<TotalScreen> {
                       ),
                     ),
                   ),
-                  child: const Text('10000 Ks'),
+                  child: Text('$totalbal Ks'),
                 ),
               ),
             ),
@@ -331,6 +342,8 @@ class _TotalScreenState extends State<TotalScreen> {
                       width: double.infinity,
                       child: MaterialButton(
                         onPressed: () {
+                          totalBalanceList = [];
+                          setState(() {});
                           if (datamodel == null) {
                             String time = Tools.ymdhmsDateFormat();
                             TotalBalanceModel totalBalanceModel =
@@ -346,13 +359,17 @@ class _TotalScreenState extends State<TotalScreen> {
                                     sharestatus: 'true');
                             dev.log(
                                 'Total Balance Model : ${totalBalanceModel.toMap()}');
-                            db.saveTotalBalance(totalBalanceModel);
-                            SharedPref.setTotalBalance(
-                                totalBalance: double.parse(
-                                    Tools.removeCommaSeparator(
-                                        totalBalanceController.text)));
+
                             FirebaseService()
-                                .saveTotalBalanceToFirestore(totalBalanceModel);
+                                .saveTotalBalanceToFirestore(totalBalanceModel)
+                                .then((value) {
+                              db.saveTotalBalance(totalBalanceModel);
+
+                              double totalb = totalbal +
+                                  double.parse(totalBalanceController.text);
+                              SharedPref.setTotalBalance(totalBalance: totalb);
+                              getData();
+                            });
                           } else {
                             TotalBalanceModel totalBalanceModel =
                                 TotalBalanceModel(
@@ -369,16 +386,20 @@ class _TotalScreenState extends State<TotalScreen> {
                             dev.log(
                                 'Total Balance Model : ${totalBalanceModel.toMap()}');
                             // db.saveTotalBalance(totalBalanceModel);
-                            SharedPref.setTotalBalance(
-                                totalBalance: double.parse(
-                                    Tools.removeCommaSeparator(
-                                        totalBalanceController.text)));
                             // FirebaseService()
                             //     .saveTotalBalanceToFirestore(totalBalanceModel);
-                            FirebaseService().updateTotalBalanceInFirestore(
-                                totalBalanceModel);
+                            FirebaseService()
+                                .updateTotalBalanceInFirestore(
+                                    totalBalanceModel)
+                                .then((value) {
+                              double totalb = totalbal -
+                                  double.parse(datamodel.totalbalance) +
+                                  double.parse(totalBalanceController.text);
+                              SharedPref.setTotalBalance(totalBalance: totalb);
+                              db.updateTotalBalance(totalBalanceModel);
+                              getData();
+                            });
                           }
-                          getData();
                           Navigator.of(context).pop();
                         },
                         elevation: 0.5,

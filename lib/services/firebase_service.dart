@@ -17,39 +17,16 @@ class FirebaseService {
     }
   }
 
-  Future<bool> saveMenuItemToFirebase(MenuItem menuItem) async {
-    try {
-      await _firestore.collection('menu_item').add(menuItem.toMap());
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
-
   Future<List<TotalBalanceModel>> fetchTotalBalanceFromFirestore() async {
     try {
-      final querySnapshot = await _firestore.collection('total_balance').get();
+      final querySnapshot = await _firestore
+          .collection('total_balance')
+          .orderBy('insertdate', descending: false)
+          .get();
       final totalBalanceList = querySnapshot.docs
           .map((document) => TotalBalanceModel.fromMap(document.data()))
           .toList();
       dev.log(totalBalanceList.toString());
-      return totalBalanceList;
-    } catch (error) {
-      dev.log('Error in fetching total balance: $error');
-      return [];
-    }
-  }
-
-  Future<List<MenuItem>> fetchMenuItemsFromFirebase(
-      {required String insertdate}) async {
-    try {
-      final querySnapshot = await _firestore
-          .collection('menu_item')
-          .where('menuitemdate', isEqualTo: insertdate)
-          .get();
-      final totalBalanceList = querySnapshot.docs
-          .map((document) => MenuItem.fromMap(document.data()))
-          .toList();
       return totalBalanceList;
     } catch (error) {
       dev.log('Error in fetching total balance: $error');
@@ -80,6 +57,32 @@ class FirebaseService {
     } catch (error) {
       dev.log('Error in update total balance: $error');
       return false;
+    }
+  }
+
+  Future<bool> saveMenuItemToFirebase(MenuItem menuItem) async {
+    try {
+      await _firestore.collection('menu_item').add(menuItem.toMap());
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  Future<List<MenuItem>> fetchMenuItemsFromFirebase(
+      {required String insertdate}) async {
+    try {
+      final querySnapshot = await _firestore
+          .collection('menu_item')
+          .where('menuitemdate', isEqualTo: insertdate)
+          .get();
+      final totalBalanceList = querySnapshot.docs
+          .map((document) => MenuItem.fromMap(document.data()))
+          .toList();
+      return totalBalanceList;
+    } catch (error) {
+      dev.log('Error in fetching total balance: $error');
+      return [];
     }
   }
 

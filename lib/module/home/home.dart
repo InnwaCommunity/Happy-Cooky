@@ -88,6 +88,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:new_project/config/app_theme.dart';
 import 'package:new_project/config/routes.dart';
+import 'package:new_project/config/shared_pref.dart';
 import 'package:new_project/constant/font_size.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -185,10 +186,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               onPressed: () {
                                 context.toName(Routes.totalhistory);
                               },
-                              child: const Column(
+                              child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
-                                children: [Text('Total'), Text('123456789')],
+                                children: [
+                                  const Text('Total'),
+                                  Text(
+                                      '   ${SharedPref.getTotalBalance().toInt()}   ')
+                                ],
                               ),
                             ),
                             MaterialButton(

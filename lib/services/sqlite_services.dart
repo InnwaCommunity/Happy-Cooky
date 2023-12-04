@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:new_project/models/menu_item.dart';
 import 'package:new_project/models/total_balance_model.dart';
-import 'package:new_project/models/usage_item.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -104,26 +103,6 @@ class SqliteService {
     }
   }
 
-  Future<bool> saveMenuItem(MenuItem menuItem) async {
-    try {
-      Database db = await instance.db;
-      await db.insert(tblmenuitemrecords, menuItem.toMap());
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
-
-  Future<bool> saveUsageBalance(UsageItem usageItem) async {
-    try {
-      Database db = await instance.db;
-      await db.insert(tblusagerecords, usageItem.toMap());
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
-
   Future<List<TotalBalanceModel>> getTotalBalanceList() async {
     Database db = await instance.db;
 
@@ -140,5 +119,32 @@ class SqliteService {
     }
 
     return [];
+  }
+
+  Future<bool> updateTotalBalance(TotalBalanceModel updatedRecord) async {
+    try {
+      Database db = await instance.db;
+
+      int rowsAffected = await db.update(
+        tbltotalrecords,
+        updatedRecord.toMap(),
+        where: 'totalautoid = ?',
+        whereArgs: [updatedRecord.totalbalanceid],
+      );
+
+      return rowsAffected > 0;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  Future<bool> saveMenuItem(MenuItem menuItem) async {
+    try {
+      Database db = await instance.db;
+      await db.insert(tblmenuitemrecords, menuItem.toMap());
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 }
